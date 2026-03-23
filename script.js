@@ -386,4 +386,49 @@ Vaibhav's True CV Context:
             if (e.key === 'Enter') handleSend();
         });
     }
+
+    // Testimonial Slider Logic
+    const testimonialTrack = document.getElementById('testimonialTrack');
+    const prevBtn = document.getElementById('prevTestimonial');
+    const nextBtn = document.getElementById('nextTestimonial');
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    
+    if (testimonialTrack && prevBtn && nextBtn && dots.length > 0) {
+        let currentSlide = 0;
+        const totalSlides = dots.length;
+
+        function updateSlider() {
+            testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+
+        // Auto sliding every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }, 5000);
+    }
 });
